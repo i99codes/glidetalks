@@ -5,8 +5,211 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>GlideTalks Admin</title>
+  <style>
+    /* Custom styling for the CMS preview */
+    .cms-editor-toolbar { font-family: 'Inter', sans-serif; }
+  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+  <script>
+    // ── Register custom editor components ──
+
+    // TABLE: Insert markdown tables
+    CMS.registerEditorComponent({
+      id: "table",
+      label: "Table",
+      fields: [
+        { name: "headers", label: "Column Headers (comma separated)", widget: "string", default: "Column 1, Column 2, Column 3" },
+        { name: "rows", label: "Table Rows (one row per line, columns separated by |)", widget: "text", default: "Row 1 Col 1 | Row 1 Col 2 | Row 1 Col 3\nRow 2 Col 1 | Row 2 Col 2 | Row 2 Col 3" }
+      ],
+      pattern: /^(\|.+\|\n\|[-| ]+\|\n(?:\|.+\|\n?)+)/m,
+      fromBlock: function(match) {
+        var lines = match[1].trim().split("\n");
+        var headers = lines[0].replace(/^\||\|$/g, "").split("|").map(function(s) { return s.trim(); }).join(", ");
+        var rows = lines.slice(2).map(function(line) {
+          return line.replace(/^\||\|$/g, "").split("|").map(function(s) { return s.trim(); }).join(" | ");
+        }).join("\n");
+        return { headers: headers, rows: rows };
+      },
+      toBlock: function(obj) {
+        var cols = obj.headers.split(",").map(function(s) { return s.trim(); });
+        var headerRow = "| " + cols.join(" | ") + " |";
+        var separator = "| " + cols.map(function() { return "---"; }).join(" | ") + " |";
+        var dataRows = obj.rows.split("\n").map(function(row) {
+          return "| " + row.split("|").map(function(s) { return s.trim(); }).join(" | ") + " |";
+        }).join("\n");
+        return headerRow + "\n" + separator + "\n" + dataRows;
+      },
+      toPreview: function(obj) {
+        var cols = obj.headers.split(",").map(function(s) { return s.trim(); });
+        var ths = cols.map(function(c) { return "<th style='padding:8px 12px;background:#f3f4f6;border:1px solid #d1d5db;font-weight:600'>" + c + "</th>"; }).join("");
+        var trs = obj.rows.split("\n").map(function(row) {
+          var tds = row.split("|").map(function(s) { return "<td style='padding:8px 12px;border:1px solid #d1d5db'>" + s.trim() + "</td>"; }).join("");
+          return "<tr>" + tds + "</tr>";
+        }).join("");
+        return "<table style='width:100%;border-collapse:collapse;margin:16px 0'><thead><tr>" + ths + "</tr></thead><tbody>" + trs + "</tbody></table>";
+      }
+    });
+
+    // CODE BLOCK: Insert syntax-highlighted code
+    CMS.registerEditorComponent({
+      id: "code-block",
+      label: "Code Block",
+      fields: [
+        {
+          name: "language",
+          label: "Language",
+          widget: "select",
+          options: ["text", "javascript", "python", "bash", "xml", "json", "powershell", "sql", "java", "html", "css", "yaml"],
+          default: "text"
+        },
+        { name: "code", label: "Code", widget: "text" }
+      ],
+      pattern: /^```(\w*)\n([\s\S]*?)```$/m,
+      fromBlock: function(match) {
+        return { language: match[1] || "text", code: match[2].trim() };
+      },
+      toBlock: function(obj) {
+        return "```" + obj.language + "\n" + obj.code + "\n```";
+      },
+      toPreview: function(obj) {
+        return "<pre style='background:#1e1e2e;color:#cdd6f4;padding:20px 24px;border-radius:8px;overflow-x:auto;margin:16px 0;font-size:0.85rem;line-height:1.65;font-family:monospace;border:1px solid #313244'><code>" + obj.code.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</code></pre>";
+      }
+    });
+
+    // CALLOUT / INFO BOX
+    CMS.registerEditorComponent({
+      id: "callout",
+      label: "Callout Box",
+      fields: [
+        {
+          name: "type",
+          label: "Type",
+          widget: "select",
+          options: [
+            { label: "Info", value: "info" },
+            { label: "Warning", value: "warning" },
+            { label: "Tip", value: "tip" },
+            { label: "Important", value: "important" }
+          ],
+          default: "info"
+        },
+        { name: "title", label: "Title", widget: "string", default: "" },
+        { name: "content", label: "Content", widget: "text" }
+      ],
+      pattern: /^<div class="callout callout-(\w+)">\s*(?:<h5>(.*?)<\/h5>)?\s*<p>([\s\S]*?)<\/p>\s*<\/div>$/m,
+      fromBlock: function(match) {
+        return { type: match[1], title: match[2] || "", content: match[3] };
+      },
+      toBlock: function(obj) {
+        var titleHtml = obj.title ? "<h5>" + obj.title + "</h5>\n" : "";
+        return '<div class="callout callout-' + obj.type + '">\n' + titleHtml + "<p>" + obj.content + "</p>\n</div>";
+      },
+      toPreview: function(obj) {
+        var colors = { info: "#2563eb", warning: "#d97706", tip: "#059669", important: "#dc2626" };
+        var icons = { info: "i", warning: "!", tip: "TIP", important: "!!" };
+        var color = colors[obj.type] || "#2563eb";
+        var titleHtml = obj.title ? "<strong style='display:block;margin-bottom:4px'>" + obj.title + "</strong>" : "";
+        return "<div style='border-left:4px solid " + color + ";background:" + color + "10;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0'>" + titleHtml + obj.content + "</div>";
+      }
+    });
+
+    // YOUTUBE EMBED
+    CMS.registerEditorComponent({
+      id: "youtube",
+      label: "YouTube Video",
+      fields: [
+        { name: "url", label: "YouTube URL", widget: "string", hint: "Paste the full YouTube URL (e.g. https://www.youtube.com/watch?v=abc123)" },
+        { name: "title", label: "Video Title (optional)", widget: "string", default: "", required: false }
+      ],
+      pattern: /^<div class="video-embed">\s*<iframe.*?src="https:\/\/www\.youtube\.com\/embed\/(.*?)".*?<\/iframe>\s*(?:<p class="video-caption">(.*?)<\/p>)?\s*<\/div>$/m,
+      fromBlock: function(match) {
+        return { url: "https://www.youtube.com/watch?v=" + match[1], title: match[2] || "" };
+      },
+      toBlock: function(obj) {
+        var videoId = "";
+        var m = obj.url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+        if (m) videoId = m[1];
+        var caption = obj.title ? '\n<p class="video-caption">' + obj.title + "</p>" : "";
+        return '<div class="video-embed">\n<iframe width="100%" height="400" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe>' + caption + "\n</div>";
+      },
+      toPreview: function(obj) {
+        var videoId = "";
+        var m = obj.url.match(/(?:v=|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+        if (m) videoId = m[1];
+        return '<div style="margin:16px 0"><iframe width="100%" height="400" src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allowfullscreen></iframe></div>';
+      }
+    });
+
+    // HORIZONTAL RULE / DIVIDER
+    CMS.registerEditorComponent({
+      id: "divider",
+      label: "Divider",
+      fields: [],
+      pattern: /^---$/m,
+      fromBlock: function() { return {}; },
+      toBlock: function() { return "---"; },
+      toPreview: function() {
+        return "<hr style='border:none;border-top:1px solid #d1d5db;margin:32px 0' />";
+      }
+    });
+
+    // IMAGE WITH CAPTION
+    CMS.registerEditorComponent({
+      id: "figure",
+      label: "Image with Caption",
+      fields: [
+        { name: "image", label: "Image", widget: "image" },
+        { name: "alt", label: "Alt Text", widget: "string", default: "" },
+        { name: "caption", label: "Caption (optional)", widget: "string", default: "", required: false }
+      ],
+      pattern: /^<figure>\s*<img src="(.*?)" alt="(.*?)".*?\/?>(?:\s*<figcaption>(.*?)<\/figcaption>)?\s*<\/figure>$/m,
+      fromBlock: function(match) {
+        return { image: match[1], alt: match[2] || "", caption: match[3] || "" };
+      },
+      toBlock: function(obj) {
+        var cap = obj.caption ? "\n<figcaption>" + obj.caption + "</figcaption>" : "";
+        return '<figure>\n<img src="' + obj.image + '" alt="' + obj.alt + '" />' + cap + "\n</figure>";
+      },
+      toPreview: function(obj) {
+        var cap = obj.caption ? "<figcaption style='font-size:0.82rem;color:#9ca3af;margin-top:8px;font-style:italic;text-align:center'>" + obj.caption + "</figcaption>" : "";
+        return '<figure style="margin:24px 0;text-align:center"><img src="' + obj.image + '" alt="' + obj.alt + '" style="max-width:100%;border-radius:8px;border:1px solid #e5e7eb" />' + cap + "</figure>";
+      }
+    });
+
+    // BUTTON / CTA LINK
+    CMS.registerEditorComponent({
+      id: "button",
+      label: "Button Link",
+      fields: [
+        { name: "text", label: "Button Text", widget: "string", default: "Learn More" },
+        { name: "url", label: "URL", widget: "string" },
+        {
+          name: "style",
+          label: "Style",
+          widget: "select",
+          options: [
+            { label: "Primary (Blue)", value: "primary" },
+            { label: "Outline", value: "outline" }
+          ],
+          default: "primary"
+        }
+      ],
+      pattern: /^<a href="(.*?)" class="btn btn-(\w+)">(.*?)<\/a>$/m,
+      fromBlock: function(match) {
+        return { url: match[1], style: match[2], text: match[3] };
+      },
+      toBlock: function(obj) {
+        return '<a href="' + obj.url + '" class="btn btn-' + obj.style + '">' + obj.text + "</a>";
+      },
+      toPreview: function(obj) {
+        var bg = obj.style === "primary" ? "background:#2563eb;color:#fff;border:none" : "background:transparent;color:#2563eb;border:2px solid #2563eb";
+        return '<a href="' + obj.url + '" style="display:inline-block;padding:10px 24px;border-radius:6px;font-weight:600;text-decoration:none;margin:8px 0;' + bg + '">' + obj.text + "</a>";
+      }
+    });
+
+    console.log("GlideTalks CMS: All custom editor components registered");
+  </script>
 </body>
 </html>

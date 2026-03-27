@@ -11,9 +11,11 @@ collections:
     folder: "content/posts"
     create: true
     slug: "{{slug}}"
+    editor:
+      preview: true
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown on homepage cards" }
+      - { label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown on homepage cards (2-3 sentences)" }
       - label: "Category"
         name: "category"
         widget: "select"
@@ -28,7 +30,10 @@ collections:
           - { label: "SecOps", value: "secops" }
           - { label: "HRSD", value: "hrsd" }
           - { label: "Tech Trends", value: "trends" }
-      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read" }
-      - { label: "Tags", name: "tags", widget: "list", hint: "Comma separated tags" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read", hint: "e.g. 3 min read, 6 min read" }
+      - { label: "Tags", name: "tags", widget: "list", hint: "Add tags one by one (e.g. ServiceNow, ITOM, Cloud)" }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false, hint: "Show as featured article on homepage" }
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+        hint: "Use the toolbar for formatting. Use the + button to insert Tables, Code Blocks, Callouts, YouTube videos, Images with captions, and more."

@@ -47,15 +47,12 @@ function parseFrontmatter(content) {
     if (idx === -1) return;
     const key = line.slice(0, idx).trim();
     let val = line.slice(idx + 1).trim();
-    // Remove surrounding quotes
     if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
       val = val.slice(1, -1);
     }
-    // Parse arrays like [a, b, c]
     if (val.startsWith('[') && val.endsWith(']')) {
       val = val.slice(1, -1).split(',').map(s => s.trim().replace(/^["']|["']$/g, ''));
     }
-    // Parse booleans
     if (val === 'true') val = true;
     if (val === 'false') val = false;
     meta[key] = val;
@@ -67,9 +64,10 @@ function parseFrontmatter(content) {
 // ── Generate excerpt from body ──
 function makeExcerpt(body, maxLen = 160) {
   const text = body
-    .replace(/!\[.*?\]\(.*?\)/g, '')   // remove images
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // links to text
-    .replace(/[#*_>`~\-]/g, '')        // remove markdown chars
+    .replace(/<[^>]+>/g, '')
+    .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/[#*_>`~\-]/g, '')
     .replace(/\n+/g, ' ')
     .trim();
   return text.length > maxLen ? text.slice(0, maxLen) + '...' : text;
@@ -78,19 +76,10 @@ function makeExcerpt(body, maxLen = 160) {
 // ── Build nav HTML ──
 function buildNav(activeCat) {
   const links = NAV_CATS.map(c =>
-    `      <a href="../index.html?cat=${c.key}" class="cat-link${c.key === activeCat ? ' active' : ''}">${c.label}</a>`
+    '      <a href="../index.html?cat=' + c.key + '" class="cat-link' + (c.key === activeCat ? ' active' : '') + '">' + c.label + '</a>'
   ).join('\n');
 
-  return `<div class="topnav">
-  <div class="topnav-inner">
-    <a href="../index.html" class="logo"><span>Glide</span>Talks</a>
-    <div class="cat-nav">
-      <a href="../index.html" class="cat-link">All</a>
-${links}
-      <a href="../about.html" class="cat-link">Author</a>
-    </div>
-  </div>
-</div>`;
+  return '<div class="topnav">\n  <div class="topnav-inner">\n    <a href="../index.html" class="logo"><span>Glide</span>Talks</a>\n    <div class="cat-nav">\n      <a href="../index.html" class="cat-link">All</a>\n' + links + '\n      <a href="../about.html" class="cat-link">Author</a>\n    </div>\n  </div>\n</div>';
 }
 
 // ── Build sidebar ──
@@ -101,126 +90,39 @@ function buildSidebar(currentSlug, currentCat, allArticles) {
     .slice(0, 3);
 
   const relatedItems = related.map(a =>
-    `        <li onclick="window.location='${a.slug}.html'"><span class="sp-cat ${catInfo.css}">${catInfo.label}</span>${a.title.slice(0, 50)}...</li>`
+    '        <li onclick="window.location=\'' + a.slug + '.html\'"><span class="sp-cat ' + catInfo.css + '">' + catInfo.label + '</span>' + a.title.slice(0, 50) + '...</li>'
   ).join('\n');
 
-  return `  <aside class="sidebar">
-    <div class="sb-card sb-about">
-      <div class="sb-avatar">KC</div>
-      <div class="sb-name">Kiran Kumar Chitrada</div>
-      <div class="sb-role">Veteran &middot; ServiceNow CTA</div>
-      <div class="sb-bio">Building resilient IT environments through ITOM, CMDB, and enterprise architecture.</div>
-      <div class="sb-social">
-        <a href="https://www.linkedin.com/in/ck-kumar/" target="_blank">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-          LinkedIn
-        </a>
-        <a href="../about.html">More &rarr;</a>
-      </div>
-    </div>
-
-    <div class="sb-card">
-      <div class="sb-title">More in ${catInfo.label}</div>
-      <ul class="sb-posts">
-${relatedItems}
-        <li onclick="window.location='../index.html?cat=${currentCat}'">View all ${catInfo.label} articles &rarr;</li>
-      </ul>
-    </div>
-  </aside>`;
+  return '  <aside class="sidebar">\n    <div class="sb-card sb-about">\n      <div class="sb-avatar">KC</div>\n      <div class="sb-name">Kiran Kumar Chitrada</div>\n      <div class="sb-role">Veteran &middot; ServiceNow CTA</div>\n      <div class="sb-bio">Building resilient IT environments through ITOM, CMDB, and enterprise architecture.</div>\n      <div class="sb-social">\n        <a href="https://www.linkedin.com/in/ck-kumar/" target="_blank">\n          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>\n          LinkedIn\n        </a>\n        <a href="../about.html">More &rarr;</a>\n      </div>\n    </div>\n\n    <div class="sb-card">\n      <div class="sb-title">More in ' + catInfo.label + '</div>\n      <ul class="sb-posts">\n' + relatedItems + '\n        <li onclick="window.location=\'../index.html?cat=' + currentCat + '\'">View all ' + catInfo.label + ' articles &rarr;</li>\n      </ul>\n    </div>\n  </aside>';
 }
 
 // ── Build post HTML page ──
 function buildPostHTML(article, allArticles, prevArticle, nextArticle) {
   const cat = CATEGORIES[article.category] || { label: article.category, icon: '', css: '' };
-  const tagsHTML = (article.tags || []).map(t =>
-    `<a href="../index.html?tag=${t}" class="tag">${t}</a>`
+  const tagsHTML = (article.tags || []).filter(Boolean).map(t =>
+    '<a href="../index.html?tag=' + t + '" class="tag">' + t + '</a>'
   ).join(' ');
 
   const prevLink = prevArticle
-    ? `<a href="${prevArticle.slug}.html">&larr; ${prevArticle.title.slice(0, 50)}...</a>`
+    ? '<a href="' + prevArticle.slug + '.html">&larr; ' + prevArticle.title.slice(0, 50) + '...</a>'
     : '<span></span>';
   const nextLink = nextArticle
-    ? `<a href="${nextArticle.slug}.html">${nextArticle.title.slice(0, 50)}... &rarr;</a>`
+    ? '<a href="' + nextArticle.slug + '.html">' + nextArticle.title.slice(0, 50) + '... &rarr;</a>'
     : '<span></span>';
 
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${article.title} | GlideTalks</title>
-<meta name="description" content="${article.excerpt.slice(0, 160)}">
-<meta name="author" content="Kiran Kumar Chitrada">
-<meta property="og:title" content="${article.title}">
-<meta property="og:type" content="article">
-<link rel="canonical" href="https://glidetalks.com/${article.slug}/">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-
-${buildNav(article.category)}
-
-<div class="main">
-  <div class="content">
-    <div class="post-header">
-      <div class="article-cat ${cat.css}"><span class="cat-icon">${cat.icon}</span> ${cat.label}</div>
-      <h1>${article.title}</h1>
-      <div class="article-meta">
-        <span>${article.readTime}</span>
-        <span>By Kiran Kumar Chitrada</span>
-      </div>
-      ${tagsHTML ? `<div class="article-tags" style="margin-top:12px">${tagsHTML}</div>` : ''}
-    </div>
-
-    <div class="post-content">
-      ${article.html}
-    </div>
-
-    <div class="post-nav">
-      ${prevLink}
-      ${nextLink}
-    </div>
-  </div>
-
-${buildSidebar(article.slug, article.category, allArticles)}
-</div>
-
-<footer>
-  <div style="max-width:1100px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--text3)">
-    <span>&copy; 2025 GlideTalks. All rights reserved.</span>
-    <span>By Kiran Kumar Chitrada</span>
-  </div>
-</footer>
-
-<button class="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
-</button>
-<script>
-window.addEventListener('scroll',function(){document.querySelector('.btt').classList.toggle('show',window.scrollY>400)});
-</script>
-</body>
-</html>`;
+  return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + article.title + ' | GlideTalks</title>\n<meta name="description" content="' + article.excerpt.slice(0, 160).replace(/"/g, '&quot;') + '">\n<meta name="author" content="Kiran Kumar Chitrada">\n<meta property="og:title" content="' + article.title.replace(/"/g, '&quot;') + '">\n<meta property="og:type" content="article">\n<link rel="canonical" href="https://glidetalks.com/' + article.slug + '/">\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="../css/style.css">\n</head>\n<body>\n\n' + buildNav(article.category) + '\n\n<div class="main">\n  <div class="content">\n    <div class="post-header">\n      <div class="article-cat ' + cat.css + '"><span class="cat-icon">' + cat.icon + '</span> ' + cat.label + '</div>\n      <h1>' + article.title + '</h1>\n      <div class="article-meta">\n        <span>' + article.readTime + '</span>\n        <span>By Kiran Kumar Chitrada</span>\n      </div>\n' + (tagsHTML ? '      <div class="article-tags" style="margin-top:12px">' + tagsHTML + '</div>\n' : '') + '    </div>\n\n    <div class="post-content">\n      ' + article.html + '\n    </div>\n\n    <div class="post-nav">\n      ' + prevLink + '\n      ' + nextLink + '\n    </div>\n  </div>\n\n' + buildSidebar(article.slug, article.category, allArticles) + '\n</div>\n\n<footer>\n  <div style="max-width:1100px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--text3)">\n    <span>&copy; 2025 GlideTalks. All rights reserved.</span>\n    <span>By Kiran Kumar Chitrada</span>\n  </div>\n</footer>\n\n<button class="btt" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">\n  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>\n</button>\n<script>\nwindow.addEventListener(\'scroll\',function(){document.querySelector(\'.btt\').classList.toggle(\'show\',window.scrollY>400)});\n</script>\n</body>\n</html>';
 }
 
 // ── Build articles.js ──
 function buildArticlesJS(articles) {
   const entries = articles.map(a => {
-    const tags = (a.tags || []).map(t => `"${t}"`).join(', ');
-    return `  {
-    slug: "${a.slug}",
-    title: "${a.title.replace(/"/g, '\\"')}",
-    excerpt: "${a.excerpt.replace(/"/g, '\\"').replace(/\n/g, ' ')}",
-    category: "${a.category}",
-    categoryLabel: "${(CATEGORIES[a.category] || {}).label || a.category}",
-    categoryIcon: "${(CATEGORIES[a.category] || {}).icon || ''}",
-    readTime: "${a.readTime}",
-    tags: [${tags}],
-    featured: ${a.featured ? 'true' : 'false'}
-  }`;
+    const tags = (a.tags || []).filter(Boolean).map(t => '"' + t + '"').join(', ');
+    const escapedTitle = a.title.replace(/"/g, '\\"');
+    const escapedExcerpt = a.excerpt.replace(/"/g, '\\"').replace(/\n/g, ' ');
+    return '  {\n    slug: "' + a.slug + '",\n    title: "' + escapedTitle + '",\n    excerpt: "' + escapedExcerpt + '",\n    category: "' + a.category + '",\n    categoryLabel: "' + ((CATEGORIES[a.category] || {}).label || a.category) + '",\n    categoryIcon: "' + ((CATEGORIES[a.category] || {}).icon || '') + '",\n    readTime: "' + a.readTime + '",\n    tags: [' + tags + '],\n    featured: ' + (a.featured ? 'true' : 'false') + '\n  }';
   });
 
-  return `/* GlideTalks Article Data — Auto-generated by build.js */\n\nconst ARTICLES = [\n${entries.join(',\n')}\n];\n`;
+  return '/* GlideTalks Article Data */\n\nconst ARTICLES = [\n' + entries.join(',\n') + '\n];\n';
 }
 
 // ══════════════════════════════════════════════════════
@@ -230,13 +132,22 @@ const contentDir = path.join(__dirname, 'content', 'posts');
 const postsDir = path.join(__dirname, 'posts');
 const jsDir = path.join(__dirname, 'js');
 
-// Ensure output dirs exist
 if (!fs.existsSync(postsDir)) fs.mkdirSync(postsDir, { recursive: true });
 if (!fs.existsSync(jsDir)) fs.mkdirSync(jsDir, { recursive: true });
 
-// Read all markdown files
+// Check if content/posts exists (might not exist on first deploy before CMS is used)
+if (!fs.existsSync(contentDir)) {
+  console.log('No content/posts directory found. Skipping build.');
+  process.exit(0);
+}
+
 const mdFiles = fs.readdirSync(contentDir).filter(f => f.endsWith('.md'));
-console.log(`Found ${mdFiles.length} markdown posts`);
+console.log('Found ' + mdFiles.length + ' markdown posts');
+
+if (mdFiles.length === 0) {
+  console.log('No markdown files found. Skipping build.');
+  process.exit(0);
+}
 
 const articles = [];
 
@@ -249,7 +160,7 @@ for (const file of mdFiles) {
   articles.push({
     slug,
     title: meta.title || slug,
-    excerpt: makeExcerpt(body),
+    excerpt: meta.excerpt || makeExcerpt(body),
     category: meta.category || 'platform',
     readTime: meta.readTime || '5 min read',
     tags: Array.isArray(meta.tags) ? meta.tags : (meta.tags || '').split(',').map(s => s.trim()).filter(Boolean),
@@ -270,10 +181,10 @@ for (let i = 0; i < articles.length; i++) {
   const prev = i > 0 ? articles[i - 1] : null;
   const next = i < articles.length - 1 ? articles[i + 1] : null;
   const html = buildPostHTML(articles[i], articles, prev, next);
-  fs.writeFileSync(path.join(postsDir, `${articles[i].slug}.html`), html);
+  fs.writeFileSync(path.join(postsDir, articles[i].slug + '.html'), html);
 }
 
 // Generate articles.js
 fs.writeFileSync(path.join(jsDir, 'articles.js'), buildArticlesJS(articles));
 
-console.log(`Built ${articles.length} article pages and articles.js`);
+console.log('Built ' + articles.length + ' article pages and articles.js');
