@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
   <title>GlideTalks Admin</title>
-  <style>
-    /* Custom styling for the CMS preview */
-    .cms-editor-toolbar { font-family: 'Inter', sans-serif; }
-  </style>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
-    // ── Register custom editor components ──
+    // Wait for CMS to be ready before registering components
+    CMS.init();
 
-    // TABLE: Insert markdown tables
+    // ── TABLE ──
     CMS.registerEditorComponent({
       id: "table",
       label: "Table",
@@ -52,7 +49,7 @@
       }
     });
 
-    // CODE BLOCK: Insert syntax-highlighted code
+    // ── CODE BLOCK ──
     CMS.registerEditorComponent({
       id: "code-block",
       label: "Code Block",
@@ -78,7 +75,7 @@
       }
     });
 
-    // CALLOUT / INFO BOX
+    // ── CALLOUT BOX ──
     CMS.registerEditorComponent({
       id: "callout",
       label: "Callout Box",
@@ -95,7 +92,7 @@
           ],
           default: "info"
         },
-        { name: "title", label: "Title", widget: "string", default: "" },
+        { name: "title", label: "Title", widget: "string", default: "", required: false },
         { name: "content", label: "Content", widget: "text" }
       ],
       pattern: /^<div class="callout callout-(\w+)">\s*(?:<h5>(.*?)<\/h5>)?\s*<p>([\s\S]*?)<\/p>\s*<\/div>$/m,
@@ -108,19 +105,18 @@
       },
       toPreview: function(obj) {
         var colors = { info: "#2563eb", warning: "#d97706", tip: "#059669", important: "#dc2626" };
-        var icons = { info: "i", warning: "!", tip: "TIP", important: "!!" };
         var color = colors[obj.type] || "#2563eb";
         var titleHtml = obj.title ? "<strong style='display:block;margin-bottom:4px'>" + obj.title + "</strong>" : "";
         return "<div style='border-left:4px solid " + color + ";background:" + color + "10;padding:16px 20px;border-radius:0 8px 8px 0;margin:16px 0'>" + titleHtml + obj.content + "</div>";
       }
     });
 
-    // YOUTUBE EMBED
+    // ── YOUTUBE VIDEO ──
     CMS.registerEditorComponent({
       id: "youtube",
       label: "YouTube Video",
       fields: [
-        { name: "url", label: "YouTube URL", widget: "string", hint: "Paste the full YouTube URL (e.g. https://www.youtube.com/watch?v=abc123)" },
+        { name: "url", label: "YouTube URL", widget: "string", hint: "Paste the full YouTube URL" },
         { name: "title", label: "Video Title (optional)", widget: "string", default: "", required: false }
       ],
       pattern: /^<div class="video-embed">\s*<iframe.*?src="https:\/\/www\.youtube\.com\/embed\/(.*?)".*?<\/iframe>\s*(?:<p class="video-caption">(.*?)<\/p>)?\s*<\/div>$/m,
@@ -142,7 +138,7 @@
       }
     });
 
-    // HORIZONTAL RULE / DIVIDER
+    // ── DIVIDER ──
     CMS.registerEditorComponent({
       id: "divider",
       label: "Divider",
@@ -155,7 +151,7 @@
       }
     });
 
-    // IMAGE WITH CAPTION
+    // ── IMAGE WITH CAPTION ──
     CMS.registerEditorComponent({
       id: "figure",
       label: "Image with Caption",
@@ -178,7 +174,7 @@
       }
     });
 
-    // BUTTON / CTA LINK
+    // ── BUTTON LINK ──
     CMS.registerEditorComponent({
       id: "button",
       label: "Button Link",
@@ -209,7 +205,7 @@
       }
     });
 
-    console.log("GlideTalks CMS: All custom editor components registered");
+    console.log("GlideTalks CMS: All editor components registered");
   </script>
 </body>
 </html>

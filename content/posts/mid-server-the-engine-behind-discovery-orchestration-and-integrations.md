@@ -1,7 +1,7 @@
 ---
 title: "MID Server: The Engine Behind Discovery, Orchestration, and Integrations"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "6 min read"
 tags: ["ServiceNow", "ServiceMapping", "Discovery", "ITOM", "Cloud"]
 featured: true

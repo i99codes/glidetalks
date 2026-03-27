@@ -1,7 +1,7 @@
 ---
 title: "From Blueprints to Build: Designing ServiceNow Instances, Data Flows, and Integrations"
 excerpt: ""
-category: "platform"
+categories: ["platform"]
 readTime: "4 min read"
 tags: ["ServiceNow", "AssetManagement", "Strategy", "Platform", "Architecture"]
 featured: false

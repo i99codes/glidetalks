@@ -1,7 +1,7 @@
 ---
 title: "Introduction to ServiceNow AI Control Tower"
 excerpt: ""
-category: "ai"
+categories: ["ai"]
 readTime: "3 min read"
 tags: ["ServiceNow", "AI"]
 featured: false

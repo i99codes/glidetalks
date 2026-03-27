@@ -16,9 +16,11 @@ collections:
     fields:
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Excerpt", name: "excerpt", widget: "text", hint: "Short summary shown on homepage cards (2-3 sentences)" }
-      - label: "Category"
-        name: "category"
+      - label: "Categories"
+        name: "categories"
         widget: "select"
+        multiple: true
+        min: 1
         options:
           - { label: "ITOM", value: "itom" }
           - { label: "CSDM", value: "csdm" }
@@ -36,4 +38,24 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
-        hint: "Use the toolbar for formatting. Use the + button to insert Tables, Code Blocks, Callouts, YouTube videos, Images with captions, and more."
+        buttons:
+          - bold
+          - italic
+          - code
+          - link
+          - heading-one
+          - heading-two
+          - heading-three
+          - heading-four
+          - quote
+          - bulleted-list
+          - numbered-list
+        editor_components:
+          - code-block
+          - image
+          - table
+          - callout
+          - youtube
+          - divider
+          - figure
+          - button

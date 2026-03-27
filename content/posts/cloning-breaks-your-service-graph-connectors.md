@@ -1,7 +1,7 @@
 ---
 title: "When Cloning Breaks Your Service Graph Connectors: Lessons from AWS and Azure Integrations in ServiceNow"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "3 min read"
 tags: ["ServiceNow", "ITOM", "Cloud", "ServiceGraph", "Connectors", "Cloning"]
 featured: false

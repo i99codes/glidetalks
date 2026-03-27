@@ -1,7 +1,7 @@
 ---
 title: "Securing MID Servers in FedRAMP ServiceNow with mTLS"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "4 min read"
 tags: []
 featured: false

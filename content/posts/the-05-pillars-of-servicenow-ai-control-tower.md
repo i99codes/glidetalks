@@ -1,7 +1,7 @@
 ---
 title: "The 5 Pillars of ServiceNow AI Control Tower"
 excerpt: ""
-category: "ai"
+categories: ["ai"]
 readTime: "3 min read"
 tags: ["ServiceNow", "AI", "Control", "Tower", "Pillar", "Ecosystem"]
 featured: false

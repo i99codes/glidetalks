@@ -1,7 +1,7 @@
 ---
 title: "The DenyAll Mindset: Implementing ServiceNow ITOM Solutions in Government and Defense Environments"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "3 min read"
 tags: []
 featured: false

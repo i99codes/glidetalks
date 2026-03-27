@@ -1,7 +1,7 @@
 ---
 title: "Demystifying CMDB Lifecycle Stage and Status in ServiceNow"
 excerpt: ""
-category: "csdm"
+categories: ["csdm"]
 readTime: "4 min read"
 tags: ["ServiceNow", "CMDB", "LifecycleStage", "AssetManagement", "ITSM", "CSDM"]
 featured: false

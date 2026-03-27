@@ -1,7 +1,7 @@
 ---
 title: "Managing and Expanding Your ServiceNow Architecture"
 excerpt: ""
-category: "ea"
+categories: ["ea"]
 readTime: "3 min read"
 tags: []
 featured: false

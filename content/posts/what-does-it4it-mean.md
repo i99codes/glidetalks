@@ -1,7 +1,7 @@
 ---
 title: "What Does IT4IT Mean"
 excerpt: ""
-category: "it4it"
+categories: ["it4it"]
 readTime: "3 min read"
 tags: ["CSDM", "IT4IT"]
 featured: false

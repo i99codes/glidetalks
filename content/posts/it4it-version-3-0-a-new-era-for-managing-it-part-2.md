@@ -1,7 +1,7 @@
 ---
 title: "IT4IT Version 3.0: A New Era for Managing IT (Part 2)"
 excerpt: ""
-category: "it4it"
+categories: ["it4it"]
 readTime: "3 min read"
 tags: []
 featured: false

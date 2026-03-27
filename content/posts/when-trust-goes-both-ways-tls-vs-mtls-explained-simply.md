@@ -1,7 +1,7 @@
 ---
 title: "When Trust Goes Both Ways: TLS vs mTLS Explained Simply"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "3 min read"
 tags: ["ServiceNow", "ServiceMapping", "Discovery", "ITOM", "Cloud"]
 featured: false

@@ -1,7 +1,7 @@
 ---
 title: "Troubleshooting Service Mapping in Deny-All, Permit-by-Exception Environments"
 excerpt: ""
-category: "itom"
+categories: ["itom"]
 readTime: "3 min read"
 tags: ["ServiceNow", "ServiceMapping", "Discovery", "ITOM", "Cloud"]
 featured: false

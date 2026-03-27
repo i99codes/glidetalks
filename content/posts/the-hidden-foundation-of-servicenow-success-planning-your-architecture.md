@@ -1,7 +1,7 @@
 ---
 title: "The Hidden Foundation of ServiceNow Success: Planning Your Architecture"
 excerpt: ""
-category: "ea"
+categories: ["ea"]
 readTime: "4 min read"
 tags: []
 featured: false
