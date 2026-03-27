@@ -23,17 +23,21 @@ collections:
         min: 1
         options:
           - { label: "ITOM", value: "itom" }
+          - { label: "ITAM", value: "itam" }
           - { label: "CSDM", value: "csdm" }
           - { label: "AI", value: "ai" }
           - { label: "Enterprise Architecture", value: "ea" }
           - { label: "IT4IT", value: "it4it" }
           - { label: "ITSM", value: "itsm" }
           - { label: "Platform", value: "platform" }
-          - { label: "SecOps", value: "secops" }
-          - { label: "HRSD", value: "hrsd" }
           - { label: "Tech Trends", value: "trends" }
       - { label: "Read Time", name: "readTime", widget: "string", default: "5 min read", hint: "e.g. 3 min read, 6 min read" }
-      - { label: "Tags", name: "tags", widget: "list", hint: "Add tags one by one (e.g. ServiceNow, ITOM, Cloud)" }
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        allow_add: true
+        hint: "Click 'Add tags' to add each tag separately"
+        field: { label: "Tag", name: "tag", widget: "string" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false, required: false, hint: "Show as featured article on homepage" }
       - label: "Body"
         name: "body"

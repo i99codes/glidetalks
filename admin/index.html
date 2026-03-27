@@ -59,17 +59,19 @@
           options: ["text", "javascript", "python", "bash", "xml", "json", "powershell", "sql", "java", "html", "css", "yaml"],
           default: "text"
         },
-        { name: "code", label: "Code", widget: "text" }
+        { name: "code", label: "Code", widget: "text", default: " " }
       ],
       pattern: /^```(\w*)\n([\s\S]*?)```$/m,
       fromBlock: function(match) {
-        return { language: match[1] || "text", code: match[2].trim() };
+        return { language: match[1] || "text", code: match[2] ? match[2].trim() : " " };
       },
       toBlock: function(obj) {
-        return "```" + obj.language + "\n" + obj.code + "\n```";
+        var code = obj.code || " ";
+        return "```" + (obj.language || "text") + "\n" + code + "\n```";
       },
       toPreview: function(obj) {
-        return "<pre style='background:#1e1e2e;color:#cdd6f4;padding:20px 24px;border-radius:8px;overflow-x:auto;margin:16px 0;font-size:0.85rem;line-height:1.65;font-family:monospace;border:1px solid #313244'><code>" + obj.code.replace(/</g, "&lt;").replace(/>/g, "&gt;") + "</code></pre>";
+        var code = (obj.code || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return "<pre style='background:#1e1e2e;color:#cdd6f4;padding:20px 24px;border-radius:8px;overflow-x:auto;margin:16px 0;font-size:0.85rem;line-height:1.65;font-family:monospace;border:1px solid #313244'><code>" + code + "</code></pre>";
       }
     });
 

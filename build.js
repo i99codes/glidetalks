@@ -20,19 +20,19 @@ const CATEGORIES = {
   platform: { label: 'Platform', icon: '&#128274;',  css: 'c-platform' },
   secops:   { label: 'SecOps',   icon: '&#128737;',  css: 'c-secops' },
   hrsd:     { label: 'HRSD',     icon: '&#128101;',  css: 'c-hrsd' },
+  itam:     { label: 'ITAM',    icon: '&#128295;',  css: 'c-itam' },
   trends:   { label: 'Tech Trends', icon: '&#128640;', css: 'c-trends' }
 };
 
 const NAV_CATS = [
   { key: 'itom', label: 'ITOM' },
-  { key: 'itam', label: 'ITAM' },
   { key: 'csdm', label: 'CSDM' },
   { key: 'ea',   label: 'EA' },
-  { key: 'spm',  label: 'SPM' },
   { key: 'itsm', label: 'ITSM' },
   { key: 'platform', label: 'Platform' },
   { key: 'ai',   label: 'AI' },
   { key: 'it4it', label: 'IT4IT' },
+  { key: 'itam', label: 'ITAM' },
   { key: 'trends', label: 'Tech Trends' }
 ];
 
@@ -110,7 +110,7 @@ function buildPostHTML(article, allArticles, prevArticle, nextArticle) {
     ? '<a href="' + nextArticle.slug + '.html">' + nextArticle.title.slice(0, 50) + '... &rarr;</a>'
     : '<span></span>';
 
-  return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + article.title + ' | GlideTalks</title>\n<meta name="description" content="' + article.excerpt.slice(0, 160).replace(/"/g, '&quot;') + '">\n<meta name="author" content="Kiran Kumar Chitrada">\n<meta property="og:title" content="' + article.title.replace(/"/g, '&quot;') + '">\n<meta property="og:type" content="article">\n<link rel="canonical" href="https://glidetalks.com/' + article.slug + '/">\n<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="../css/style.css">\n</head>\n<body>\n<div class="reading-progress" id="readingProgress"></div>\n\n' + buildNav(article.category) + '\n\n<div class="main">\n  <div class="content">\n    <div class="post-header">\n      <div class="article-cat ' + cat.css + '"><span class="cat-icon">' + cat.icon + '</span> ' + cat.label + '</div>\n      <h1>' + article.title + '</h1>\n      <div class="article-meta">\n        <span>' + article.readTime + '</span>\n        <span>By Kiran Kumar Chitrada</span>\n      </div>\n' + (tagsHTML ? '      <div class="article-tags" style="margin-top:12px">' + tagsHTML + '</div>\n' : '') + '    </div>\n\n    <div class="post-content">\n      ' + article.html + '\n    </div>\n\n    <div class="post-nav">\n      ' + prevLink + '\n      ' + nextLink + '\n    </div>\n  </div>\n\n' + buildSidebar(article.slug, article.category, allArticles) + '\n</div>\n\n<footer>\n  <div style="max-width:1100px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--text3)">\n    <span>&copy; 2025 GlideTalks. All rights reserved.</span>\n    <span>By Kiran Kumar Chitrada</span>\n  </div>\n</footer>\n\n<button class="btt" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">\n  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>\n</button>\n<script>\nwindow.addEventListener(\'scroll\',function(){\n  document.querySelector(\'.btt\').classList.toggle(\'show\',window.scrollY>400);\n  var bar=document.getElementById(\'readingProgress\');\n  if(bar){var h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+\'%\':\'0%\'}\n});\n</script>\n</body>\n</html>';
+  return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1.0">\n<title>' + article.title + ' | GlideTalks</title>\n<meta name="description" content="' + article.excerpt.slice(0, 160).replace(/"/g, '&quot;') + '">\n<meta name="author" content="Kiran Kumar Chitrada">\n<meta property="og:title" content="' + article.title.replace(/"/g, '&quot;') + '">\n<meta property="og:type" content="article">\n<link rel="canonical" href="https://glidetalks.com/' + article.slug + '/">\n<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">\n<link rel="stylesheet" href="../css/style.css">\n</head>\n<body>\n<div class="reading-progress" id="readingProgress"></div>\n\n' + buildNav(article.category) + '\n\n<div class="main">\n  <div class="content">\n    <div class="post-header">\n      <div class="article-cat ' + cat.css + '"><span class="cat-icon">' + cat.icon + '</span> ' + cat.label + '</div>\n      <h1>' + article.title + '</h1>\n      <div class="article-meta">\n        <span>' + article.readTime + '</span>\n        <span>By Kiran Kumar Chitrada</span>\n      </div>\n' + (tagsHTML ? '      <div class="article-tags" style="margin-top:12px">' + tagsHTML + '</div>\n' : '') + '    </div>\n\n    <div class="post-content">\n      ' + article.html + '\n    </div>\n\n    <div class="post-nav">\n      ' + prevLink + '\n      ' + nextLink + '\n    </div>\n  </div>\n\n' + buildSidebar(article.slug, article.category, allArticles) + '\n</div>\n\n<footer>\n  <div style="max-width:1100px;margin:auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--text3)">\n    <span>&copy; 2025 GlideTalks. All rights reserved.</span>\n    <span>By Kiran Kumar Chitrada</span>\n  </div>\n</footer>\n\n<button class="btt" onclick="window.scrollTo({top:0,behavior:\'smooth\'})">\n  <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>\n</button>\n<script>\nwindow.addEventListener(\'scroll\',function(){\n  document.querySelector(\'.btt\').classList.toggle(\'show\',window.scrollY>400);\n  var bar=document.getElementById(\'readingProgress\');\n  if(bar){var h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+\'%\':\'0%\'}\n});\n</script>\n</body>\n</html>';
 }
 
 // ── Build articles.js ──

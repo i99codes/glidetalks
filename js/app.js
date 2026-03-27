@@ -10,14 +10,13 @@ let currentTag = null;
 // ── Category config ──
 const CAT_CONFIG = {
   itom:     { icon: '&#9881;', color: 'c-itom', accent: 'ac-itom' },
-  itam:     { icon: '&#128295;', color: 'c-itam', accent: 'ac-itam' },
   csdm:     { icon: '&#9729;&#65039;', color: 'c-csdm', accent: 'ac-csdm' },
   ea:       { icon: '&#127959;', color: 'c-ea', accent: 'ac-ea' },
-  spm:      { icon: '&#128202;', color: 'c-spm', accent: 'ac-spm' },
   itsm:     { icon: '&#127899;&#65039;', color: 'c-itsm', accent: 'ac-itsm' },
   platform: { icon: '&#128274;', color: 'c-platform', accent: 'ac-platform' },
   ai:       { icon: '&#129302;', color: 'c-ai', accent: 'ac-ai' },
   it4it:    { icon: '&#128218;', color: 'c-it4it', accent: 'ac-it4it' },
+  itam:     { icon: '&#128295;', color: 'c-itam', accent: 'ac-itam' },
   trends:   { icon: '&#128640;', color: 'c-trends', accent: 'ac-trends' }
 };
 
