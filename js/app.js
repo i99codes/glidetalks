@@ -34,7 +34,7 @@ function renderArticleCard(a) {
       <div class="article-cat ${cfg.color || ''}"><span class="cat-icon">${a.categoryIcon || ''}</span> ${a.categoryLabel}</div>
       <div class="article-title">${a.title}</div>
       <div class="article-excerpt">${a.excerpt}</div>
-      <div class="article-meta"><span>${a.date}</span><span>${a.readTime}</span></div>
+      <div class="article-meta"><span>${a.readTime}</span></div>
       ${tags ? `<div class="article-tags">${tags}</div>` : ''}
     </div>
   </div>`;
@@ -47,7 +47,7 @@ function renderFeaturedCard(a) {
     <div class="featured-cat">${a.categoryLabel}</div>
     <h3>${a.title}</h3>
     <p>${a.excerpt}</p>
-    <div class="featured-meta"><span>${a.date}</span><span>${a.readTime}</span>${tagStr ? `<span>${tagStr}</span>` : ''}</div>
+    <div class="featured-meta"><span>${a.readTime}</span>${tagStr ? `<span>${tagStr}</span>` : ''}</div>
   </div>`;
 }
 
