@@ -1,0 +1,21 @@
+# Netlify redirects - Maps old WordPress URLs to new static site URLs
+# This preserves your existing links and SEO
+
+/demystifying-cmdb-lifecycle-stage-and-status-in-servicenow/    /posts/demystifying-cmdb-lifecycle-stage-and-status-in-servicenow.html    301
+/what-does-it4it-mean/    /posts/what-does-it4it-mean.html    301
+/when-trust-goes-both-ways-tls-vs-mtls-explained-simply/    /posts/when-trust-goes-both-ways-tls-vs-mtls-explained-simply.html    301
+/it4it-version-3-0-a-new-era-for-managing-it-part-1/    /posts/it4it-version-3-0-a-new-era-for-managing-it-part-1.html    301
+/it4it-version-3-0-a-new-era-for-managing-it-part-2/    /posts/it4it-version-3-0-a-new-era-for-managing-it-part-2.html    301
+/the-denyall-mindset-implementing-servicenow-itom-solutions-in-government-and-defense-envionments/    /posts/the-denyall-mindset-implementing-servicenow-itom-solutions-in-government-and-defense-envionments.html    301
+/troubleshooting-service-mapping-in-deny-all-permit-by-exception-environments/    /posts/troubleshooting-service-mapping-in-deny-all-permit-by-exception-environments.html    301
+/the-hidden-foundation-of-servicenow-success-planning-your-architecture/    /posts/the-hidden-foundation-of-servicenow-success-planning-your-architecture.html    301
+/from-blueprints-to-build-designing-servicenow-instances-data-flows-and-integrations/    /posts/from-blueprints-to-build-designing-servicenow-instances-data-flows-and-integrations.html    301
+/managing-and-expanding-your-servicenow-architecture/    /posts/managing-and-expanding-your-servicenow-architecture.html    301
+/securing-mid-servers-in-fedramp-servicenow-with-mtls/    /posts/securing-mid-servers-in-fedramp-servicenow-with-mtls.html    301
+/introduction-to-servicenow-ai-control-tower/    /posts/introduction-to-servicenow-ai-control-tower.html    301
+/cloning-breaks-your-service-graph-connectors/    /posts/cloning-breaks-your-service-graph-connectors.html    301
+/the-05-pillars-of-servicenow-ai-control-tower/    /posts/the-05-pillars-of-servicenow-ai-control-tower.html    301
+/mid-server-the-engine-behind-discovery-orchestration-and-integrations/    /posts/mid-server-the-engine-behind-discovery-orchestration-and-integrations.html    301
+
+# Author page redirect
+/author/    /about.html    301

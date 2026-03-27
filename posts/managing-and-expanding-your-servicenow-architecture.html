@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managing and Expanding Your ServiceNow Architecture | GlideTalks</title>
+<meta name="description" content="\nIn the first two articles of this series, we explored why planning architecture matters and how to design your instances, data flows, and integrations. But he">
+<meta name="author" content="Kiran Kumar Chitrada">
+<meta property="og:title" content="Managing and Expanding Your ServiceNow Architecture">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://glidetalks.com/managing-and-expanding-your-servicenow-architecture/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <div class="topnav-inner">
+    <a href="../index.html" class="logo"><span>Glide</span>Talks</a>
+    <div class="cat-nav">
+      <a href="../index.html" class="cat-link">All</a>
+      <a href="../index.html?cat=itom" class="cat-link">ITOM</a>
+      <a href="../index.html?cat=itam" class="cat-link">ITAM</a>
+      <a href="../index.html?cat=csdm" class="cat-link">CSDM</a>
+      <a href="../index.html?cat=ea" class="cat-link active">EA</a>
+      <a href="../index.html?cat=spm" class="cat-link">SPM</a>
+      <a href="../index.html?cat=itsm" class="cat-link">ITSM</a>
+      <a href="../index.html?cat=platform" class="cat-link">Platform</a>
+      <a href="../index.html?cat=ai" class="cat-link">AI</a>
+      <a href="../index.html?cat=it4it" class="cat-link">IT4IT</a>
+      <a href="../index.html?cat=trends" class="cat-link">Tech Trends</a>
+      <a href="../about.html" class="cat-link">Author</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+    <div class="post-header">
+      <div class="article-cat c-ea"><span class="cat-icon">&#127959;</span> EA</div>
+      <h1>Managing and Expanding Your ServiceNow Architecture</h1>
+      <div class="article-meta">
+        <span>Aug 2025</span>
+        <span>3 min read</span>
+        <span>By Kiran Kumar Chitrada</span>
+      </div>
+      
+    </div>
+
+    <div class="post-content">
+      \n<p>In the first two articles of this series, we explored why planning architecture matters and how to design your instances, data flows, and integrations. But here’s the truth: architecture isn’t something you finish and walk away from. It’s a living system.</p>\n\n\n\n<p>Once ServiceNow is up and running, the real challenge begins: <strong>keeping it healthy, aligned with business goals, and ready for growth.</strong></p>\n\n\n\n<p>This stage of the journey is about discipline — the daily, monthly, and yearly practices that turn a good design into long-term success.</p>\n\n\n\n<h4>1. Governance: Who Owns What?</h4>\n\n\n\n<p>As your ServiceNow footprint grows, so do the number of people who want to build on it. Developers spin up new workflows, business units request new apps, and vendors offer integrations. Without clear governance, chaos creeps in fast.</p>\n\n\n\n<p>That’s why you need a <strong>RACI model</strong> (Responsible, Accountable, Consulted, Informed). Define who owns which parts of the platform:</p>\n\n\n\n<ul>\n<li><strong>Platform Owner</strong> -  Accountable for overall direction and value.</li>\n\n\n\n<li><strong>System Administrators</strong> -  Responsible for day-to-day management.</li>\n\n\n\n<li><strong>Architects</strong>  - shape long-term design and ensure new work aligns with standards.</li>\n\n\n\n<li><strong>Business Sponsors</strong>  - Tie changes back to strategy and funding.</li>\n</ul>\n\n\n\n<p>Think of governance as guardrails. They don’t slow you down but they keep you from flying off the road.</p>\n\n\n\n<p><strong>Takeaway:</strong> Governance is not a bureaucracy. It’s about protecting investments, keeping the platform reliable, and ensuring every change serves a purpose.</p>\n\n\n\n<h4>2. Maintenance: Keeping the Engine Running</h4>\n\n\n\n<p>Even the best planned architecture can falter without care. That’s where <strong>maintenance discipline</strong> comes in.</p>\n\n\n\n<ul>\n<li><strong>Runbooks</strong> - Document how migrations, updates, and integrations are handled. A runbook is like your car’s service manual,  it keeps everyone consistent.</li>\n\n\n\n<li><strong>Monitoring &amp; Logs</strong> - Review logs regularly and run HealthScans to spot issues before they become outages.</li>\n\n\n\n<li><strong>Release Notes &amp; Patches</strong> - ServiceNow evolves fast. Regularly review release notes so you are not caught off guard by changes.</li>\n\n\n\n<li><strong>Cloning Strategy</strong> - Keep Sub-Prod instances aligned with production by cloning smartly.</li>\n</ul>\n\n\n\n<p><strong>Takeaway:</strong> Maintenance isn’t optional overhead, it’s what keeps ServiceNow stable, secure, and trustworthy.</p>\n\n\n\n<h4>3. Upgrades &amp; Innovation: Balancing Stability with Change</h4>\n\n\n\n<p>Upgrades should be treated as <strong>repeatable business processes, not last-minute scrambles.</strong></p>\n\n\n\n<ul>\n<li>Test early in Sub-Prod instances, involve business stakeholders, and validate integrations before promoting to production.</li>\n\n\n\n<li>Use upgrades as opportunities to <strong>introduce new features</strong> especially in AI, Flow Designer, and automation  but never at the expense of stability.</li>\n\n\n\n<li>As more people across the business begin to build apps (think low-code and citizen developers), provide <strong>guardrails</strong>: separate environments, development guidelines, and reviews.</li>\n</ul>\n\n\n\n<p><strong>Takeaway:</strong> Innovation and stability are not opposites. With the right process, you can upgrade confidently and still unlock new value.</p>\n\n\n\n<h4>4. Measuring Success: What Good Looks Like</h4>\n\n\n\n<p>You cannot improve what you don't measure. Architecture health should be tracked with both technical and business KPIs.</p>\n\n\n\n<ul>\n<li><strong>Technical KPIs:</strong> CMDB health scores, % of scoped apps, number of releases behind current upgrade, MTTR (Mean Time to Resolve) for performance issues.</li>\n\n\n\n<li><strong>Business KPIs:</strong> Faster incident resolution, reduced compliance risk, increased automation rates, adoption of AI features.</li>\n</ul>\n\n\n\n<p>The key is balance, Don't just measure platform performance, measure whether it is helping the business achieve its goals.</p>\n\n\n\n<p><strong>Takeaway:</strong> Success isn’t just “<strong>the system works</strong>.” It’s “t<strong>he system drives measurable business value.</strong>”</p>\n\n\n\n<h4>Whats Ahead</h4>\n\n\n\n<p>Architecture is never “<strong>done</strong>”. It grows, adapts, and evolves along with your business.</p>\n\n\n\n<p>With strong governance, disciplined maintenance, a repeatable upgrade process, and a focus on business outcomes, your ServiceNow platform becomes more than a system. It becomes <strong>the backbone of your digital operations which is resilient, flexible, and ready for the future.</strong></p>\n\n\n\n\n
+    </div>
+
+    <div class="post-nav">
+      <a href="from-blueprints-to-build-designing-servicenow-instances-data-flows-and-integrations.html">&larr; From Blueprints to Build: Designing ServiceNow Ins...</a>
+      <a href="the-hidden-foundation-of-servicenow-success-planning-your-architecture.html">The Hidden Foundation of ServiceNow Success: Plann... &rarr;</a>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sb-card sb-about">
+      <div class="sb-avatar">KC</div>
+      <div class="sb-name">Kiran Kumar Chitrada</div>
+      <div class="sb-role">Veteran &middot; ServiceNow CTA</div>
+      <div class="sb-bio">Building resilient IT environments through ITOM, CMDB, and enterprise architecture.</div>
+      <div class="sb-social">
+        <a href="https://www.linkedin.com/in/kirankumarchitrada/" target="_blank">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="../about.html">More &rarr;</a>
+      </div>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-title">More in EA</div>
+      <ul class="sb-posts">
+        <li onclick="window.location='the-hidden-foundation-of-servicenow-success-planning-your-architecture.html'"><span class="sp-cat c-ea">EA</span>The Hidden Foundation of ServiceNow Success: ...</li>
+        <li onclick="window.location='../index.html?cat=ea'">View all EA articles &rarr;</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 GlideTalks &middot; Kiran Kumar Chitrada</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/kirankumarchitrada/" target="_blank">LinkedIn</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<button class="btt" id="btt" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+window.addEventListener('scroll', function() {
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+});
+document.getElementById('btt').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>

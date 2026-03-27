@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The DenyAll Mindset: Implementing ServiceNow ITOM Solutions in Government and Defense Environments | GlideTalks</title>
+<meta name="description" content="\nWhen deploying ServiceNow ITOM solutions in highly secure environments, technology alone isn’t enough. It's how you secure the interactions between systems th">
+<meta name="author" content="Kiran Kumar Chitrada">
+<meta property="og:title" content="The DenyAll Mindset: Implementing ServiceNow ITOM Solutions in Government and Defense Environments">
+<meta property="og:type" content="article">
+<link rel="canonical" href="https://glidetalks.com/the-denyall-mindset-implementing-servicenow-itom-solutions-in-government-and-defense-envionments/">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="topnav">
+  <div class="topnav-inner">
+    <a href="../index.html" class="logo"><span>Glide</span>Talks</a>
+    <div class="cat-nav">
+      <a href="../index.html" class="cat-link">All</a>
+      <a href="../index.html?cat=itom" class="cat-link active">ITOM</a>
+      <a href="../index.html?cat=itam" class="cat-link">ITAM</a>
+      <a href="../index.html?cat=csdm" class="cat-link">CSDM</a>
+      <a href="../index.html?cat=ea" class="cat-link">EA</a>
+      <a href="../index.html?cat=spm" class="cat-link">SPM</a>
+      <a href="../index.html?cat=itsm" class="cat-link">ITSM</a>
+      <a href="../index.html?cat=platform" class="cat-link">Platform</a>
+      <a href="../index.html?cat=ai" class="cat-link">AI</a>
+      <a href="../index.html?cat=it4it" class="cat-link">IT4IT</a>
+      <a href="../index.html?cat=trends" class="cat-link">Tech Trends</a>
+      <a href="../about.html" class="cat-link">Author</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="content">
+    <div class="post-header">
+      <div class="article-cat c-itom"><span class="cat-icon">&#9881;</span> ITOM</div>
+      <h1>The DenyAll Mindset: Implementing ServiceNow ITOM Solutions in Government and Defense Environments</h1>
+      <div class="article-meta">
+        <span>Aug 2025</span>
+        <span>3 min read</span>
+        <span>By Kiran Kumar Chitrada</span>
+      </div>
+      
+    </div>
+
+    <div class="post-content">
+      \n<p>When deploying ServiceNow ITOM solutions in highly secure environments, technology alone isn’t enough. It's how you <strong>secure the interactions between systems</strong> that truly defines your resilience. One of the foundational principles that underpins secure architecture in U.S. federal and defense networks is <strong>“DenyAll / PermitByException.”</strong></p>\n\n\n\n<p>It sounds simple, almost blunt but this mindset forms the backbone of how networks are protected, how firewalls are configured, and ultimately, how modules like ServiceNow ITOM must be implemented to stay compliant and secure.</p>\n\n\n\n<h4>What Does “DenyAll / PermitByException” Really Mean?</h4>\n\n\n\n<p>Imagine you are building a secure facility. The first rule you set is that <strong>nobody can enter unless they have been specifically invited</strong>. No exceptions. That’s the "DenyAll" part. From there, you create a list of individuals allowed in each with a reason and limited access. That’s "PermitByException."</p>\n\n\n\n<p>In the context of firewalls and network policy, this means <strong>blocking everything by default</strong> and only allowing traffic that's been explicitly approved based on protocol, port, source, and destination. This doesn’t just prevent unauthorized access. It makes access <strong>intentional</strong>, measurable, and accountable.</p>\n\n\n\n<h4>Why It’s Not Just a Best Practice - It’s Law</h4>\n\n\n\n<p>This approach isn’t just a recommendation; it’s a requirement in most U.S. government and defense environments. Agencies that operate under frameworks like <strong>NIST 800-53</strong>, <strong>FedRAMP</strong>, <strong>DoD STIGs</strong>, and <strong>Zero Trust Architecture (ZTA)</strong> are expected to implement DenyAll / PermitByException policies across their infrastructure.</p>\n\n\n\n<p>For example, NIST explicitly calls for the enforcement of least privilege and strict boundary controls. FedRAMP mandates default deny postures at the network level. And the Department of Defense requires routers and firewalls to block all traffic unless there's a documented, approved reason for allowing it.</p>\n\n\n\n<p>These rules are in place not just to protect sensitive data, but to ensure every access path is traceable and justified. In a world where zero-day vulnerabilities and insider threats are ever-present, <strong>trust must be earned - not assumed.</strong></p>\n\n\n\n<h4>How This Impacts ServiceNow ITOM Deployments</h4>\n\n\n\n<p>ServiceNow ITOM is designed to discover infrastructure, manage events, and orchestrate workflows across your environment. But when you are operating under a DenyAll policy, this introduces a set of challenges and responsibilities for the implementation teams.</p>\n\n\n\n<p>Take the <strong>MID Server</strong>, for example. In a typical environment, it might have broad access to scan networks, talk to cloud APIs. But in a government or defense setting, it must live inside <strong>a tightly controlled subnet</strong>, with <strong>outbound access only</strong>. Even that access has to be explicitly defined which is usually restricted to port 443 and specific ServiceNow instance URLs.</p>\n\n\n\n<p>If you are using <strong>mutual TLS (mTLS)</strong> for even tighter security, it gets more complex. Both the MID Server and the ServiceNow instance must present and validate certificates . That means you will need to manage certificate chains, secure private keys, and make sure your proxies or firewalls aren’t unintentionally breaking the mTLS handshake.</p>\n\n\n\n<p><strong><em>I will  be writing a dedicated article on MID Servers deployment using certifcates and mTLS </em></strong></p>\n\n\n\n<p>Discovery probes, which rely on protocols like SNMP, WMI, or SSH, can’t just reach out across the network. Every port, every protocol, and every target system must be individually approved and sometimes even documented in a formal change record. It’s not just a firewall change; it’s a compliance event.</p>\n\n\n\n<p>Even integrations with cloud services like AWS CloudWatch or Azure Monitor must be evaluated through the same lens. Are the outbound calls permitted? Are the endpoints on the allow list? Are certificates in place? These are the types of questions security teams and ServiceNow architects must answer together before a single CI can be discovered or a single event ingested.</p>\n\n\n\n<h4>Putting It All Together</h4>\n\n\n\n<p>DenyAll / PermitByException isn’t just a firewall rule. It’s a security philosophy and a legal requirement for teams working in and around U.S. government systems. When you implement ServiceNow ITOM under this model, you are not just deploying MID Server, collecting IP ranges, creating schedule and running discovery. You are architecting trust.</p>\n\n\n\n<p>You need to know exactly:</p>\n\n\n\n<ul>\n<li>Which systems the MID Server needs to talk to</li>\n\n\n\n<li>What protocols are involved</li>\n\n\n\n<li>What certificates are being used</li>\n\n\n\n<li>What firewall or proxy rules need to be changed</li>\n\n\n\n<li>And how you will prove all of this in an audit</li>\n</ul>\n\n\n\n<p>But the reward is a system that’s both powerful and secure fully capable of supporting the mission without exposing the organization to unnecessary risk.</p>\n\n\n\n\n
+    </div>
+
+    <div class="post-nav">
+      <a href="the-hidden-foundation-of-servicenow-success-planning-your-architecture.html">&larr; The Hidden Foundation of ServiceNow Success: Plann...</a>
+      <a href="troubleshooting-service-mapping-in-deny-all-permit-by-exception-environments.html">Troubleshooting Service Mapping in Deny-All, Permi... &rarr;</a>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sb-card sb-about">
+      <div class="sb-avatar">KC</div>
+      <div class="sb-name">Kiran Kumar Chitrada</div>
+      <div class="sb-role">Veteran &middot; ServiceNow CTA</div>
+      <div class="sb-bio">Building resilient IT environments through ITOM, CMDB, and enterprise architecture.</div>
+      <div class="sb-social">
+        <a href="https://www.linkedin.com/in/kirankumarchitrada/" target="_blank">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          LinkedIn
+        </a>
+        <a href="../about.html">More &rarr;</a>
+      </div>
+    </div>
+
+    <div class="sb-card">
+      <div class="sb-title">More in ITOM</div>
+      <ul class="sb-posts">
+        <li onclick="window.location='mid-server-the-engine-behind-discovery-orchestration-and-integrations.html'"><span class="sp-cat c-itom">ITOM</span>MID Server: The Engine Behind Discovery, Orch...</li>
+        <li onclick="window.location='cloning-breaks-your-service-graph-connectors.html'"><span class="sp-cat c-itom">ITOM</span>When Cloning Breaks Your Service Graph Connec...</li>
+        <li onclick="window.location='securing-mid-servers-in-fedramp-servicenow-with-mtls.html'"><span class="sp-cat c-itom">ITOM</span>Securing MID Servers in FedRAMP ServiceNow wi...</li>
+        <li onclick="window.location='../index.html?cat=itom'">View all ITOM articles &rarr;</li>
+      </ul>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 GlideTalks &middot; Kiran Kumar Chitrada</span>
+    <div class="footer-links">
+      <a href="https://www.linkedin.com/in/kirankumarchitrada/" target="_blank">LinkedIn</a>
+      <a href="../about.html">About</a>
+    </div>
+  </div>
+</footer>
+
+<button class="btt" id="btt" aria-label="Back to top">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<script>
+window.addEventListener('scroll', function() {
+  document.getElementById('btt').classList.toggle('show', window.scrollY > 400);
+});
+document.getElementById('btt').addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+</script>
+</body>
+</html>
