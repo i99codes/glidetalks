@@ -38,24 +38,3 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
-        buttons:
-          - bold
-          - italic
-          - code
-          - link
-          - heading-one
-          - heading-two
-          - heading-three
-          - heading-four
-          - quote
-          - bulleted-list
-          - numbered-list
-        editor_components:
-          - code-block
-          - image
-          - table
-          - callout
-          - youtube
-          - divider
-          - figure
-          - button
