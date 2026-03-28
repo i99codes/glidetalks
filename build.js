@@ -42,11 +42,41 @@ function parseFrontmatter(content) {
   if (!match) return { meta: {}, body: content };
 
   const meta = {};
-  match[1].split('\n').forEach(line => {
+  const lines = match[1].split('\n');
+  let currentKey = null;
+  let currentList = null;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+
+    // YAML list item (e.g. "  - itom")
+    if (/^\s+-\s+/.test(line)) {
+      if (currentKey && currentList) {
+        const item = line.replace(/^\s+-\s+/, '').trim().replace(/^["']|["']$/g, '');
+        currentList.push(item);
+      }
+      continue;
+    }
+
+    // Save any accumulated list
+    if (currentKey && currentList) {
+      meta[currentKey] = currentList;
+      currentKey = null;
+      currentList = null;
+    }
+
     const idx = line.indexOf(':');
-    if (idx === -1) return;
+    if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
     let val = line.slice(idx + 1).trim();
+
+    // Empty value means a YAML list may follow on next lines
+    if (val === '') {
+      currentKey = key;
+      currentList = [];
+      continue;
+    }
+
     if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
       val = val.slice(1, -1);
     }
@@ -56,7 +86,12 @@ function parseFrontmatter(content) {
     if (val === 'true') val = true;
     if (val === 'false') val = false;
     meta[key] = val;
-  });
+  }
+
+  // Save final accumulated list
+  if (currentKey && currentList) {
+    meta[currentKey] = currentList;
+  }
 
   return { meta, body: match[2] };
 }
